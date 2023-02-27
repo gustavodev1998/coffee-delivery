@@ -4,9 +4,10 @@ export const CoffeeCardContainer = styled.div`
   width: 16rem;
   margin-top: 3.375rem;
   text-align: center;
-  padding: 0 1.5rem 1.5rem;
+  padding: 0 1.25rem 1.5rem;
   background-color: ${(props) => props.theme.card};
   border-radius: 0.375rem 2.25rem;
+  min-height: 19.375rem;
 `;
 
 export const CoffeeCardImageContainer = styled.div`
@@ -43,6 +44,7 @@ export const CoffeeCardTitle = styled.h2`
   line-height: 1.625rem;
   font-family: "Baloo 2";
   margin-bottom: 0.5rem;
+  font-size: 1.25rem;
 `;
 export const CoffeeCardSubTitle = styled.div`
   font-weight: 400;

@@ -24,6 +24,11 @@ export const GlobalStyle = createGlobalStyle`
 
     button {
         color: #fff;
+        cursor: pointer;
+    }
+
+    img, svg, a {
+        cursor: pointer;
     }
 
     body, input-security, textarea, button {

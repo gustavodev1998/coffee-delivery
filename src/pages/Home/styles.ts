@@ -14,13 +14,18 @@ export const HomeContainer = styled.div`
 
 export const HomeMain = styled.main`
   max-width: 1120px;
-  min-height: 544px; /* TALVEZ TIRAR NÃO SEI */
+  min-height: 544px;
   margin: auto;
 
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 3.5rem;
+
+  @media only screen and (max-width: 1200px) {
+    flex-direction: column;
+    padding: 0 2rem;
+  }
 `;
 
 export const HomeInfo = styled.div`
@@ -55,6 +60,10 @@ export const HomeItems = styled.div`
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   gap: 0.75rem;
+
+  @media only screen and (max-width: 768px) {
+    grid-template-columns: repeat(1, 1fr);
+  }
 `;
 
 export const HomeItem = styled.div`
@@ -83,16 +92,24 @@ export const HomeItemSvgContainer = styled.div<SvgVariantProps>`
 export const HomePublicity = styled.img`
   width: 29.75rem;
   height: 22.5rem;
+
+  @media only screen and (max-width: 500px) {
+    display: none;
+  }
 `;
 
 /* 2nd PART OF HOME */
 export const HomeCoffees = styled.div`
   max-width: 1120px;
   margin: auto;
-  padding-bottom: 8.75rem;
+  padding: 3.5rem 0;
 
   h1 {
     ${(props) => props.theme.subtitle};
+  }
+
+  @media only screen and (max-width: 1200px) {
+    padding: 2rem;
   }
 `;
 
@@ -101,4 +118,12 @@ export const CoffeeCards = styled.div`
   grid-template-columns: repeat(4, 1fr);
   align-items: center;
   gap: 2rem;
+
+  @media only screen and (max-width: 1200px) {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  @media only screen and (max-width: 615px) {
+    grid-template-columns: repeat(1, 1fr);
+  }
 `;

@@ -9,6 +9,10 @@ export const HeaderContainer = styled.div`
   align-items: center;
   justify-content: space-between;
 
+  @media only screen and (max-width: 1200px) {
+    padding: 0 2rem;
+  }
+
   nav {
     display: flex;
     align-items: center;
