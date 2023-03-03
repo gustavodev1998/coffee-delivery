@@ -5,19 +5,31 @@ import {
   MapPinLine,
   Money,
 } from "phosphor-react";
+
+import { CoffeeCard } from "./Components/CoffeeCard";
 import {
   CheckoutAddress,
   CheckoutAddressForm,
   CheckoutAddressFormContainer,
   CheckoutAddressHeader,
+  CheckoutCartSelected,
+  CheckoutCartSelectedResume,
+  CheckoutConfirmOrder,
   CheckoutContainer,
+  CheckoutInfo,
   CheckoutMain,
   CheckoutOrder,
   CheckoutOrderHeader,
   CheckoutOrderPayment,
   CheckoutOrderPaymentMethod,
   CheckoutTitle,
+  CheckoutTotal,
+  CoffeeCards,
 } from "./styles";
+
+import expresso from "../../assets/coffeetypes/expresso.svg";
+import americano from "../../assets/coffeetypes/americano.svg";
+import { NavLink } from "react-router-dom";
 
 export function Checkout() {
   return (
@@ -104,6 +116,48 @@ export function Checkout() {
           </CheckoutOrderPayment>
         </CheckoutOrder>
       </CheckoutMain>
+
+      <CheckoutCartSelected>
+        <CheckoutTitle>Cafés selecionados</CheckoutTitle>
+
+        <CheckoutCartSelectedResume>
+          <CoffeeCards>
+            <CoffeeCard
+              id={0}
+              src={expresso}
+              alt={"expresso"}
+              title={"Expresso Tradicional"}
+              price={"9,99"}
+            />
+            <CoffeeCard
+              id={1}
+              src={americano}
+              alt={"americano"}
+              title={"Expresso Americano"}
+              price={"9,99"}
+            />
+          </CoffeeCards>
+
+          <CheckoutInfo>
+            <div>Total de itens</div>
+            <span>R$ 29,70</span>
+          </CheckoutInfo>
+
+          <CheckoutInfo>
+            <div>Entrega</div>
+            <span>R$ 3,50</span>
+          </CheckoutInfo>
+
+          <CheckoutTotal>
+            <div>Total</div>
+            <span>R$ 33,20</span>
+          </CheckoutTotal>
+
+          <NavLink to="/success" title="Confirme" className="confirmOrder">
+            <CheckoutConfirmOrder>Confirmar Pedido</CheckoutConfirmOrder>
+          </NavLink>
+        </CheckoutCartSelectedResume>
+      </CheckoutCartSelected>
     </CheckoutContainer>
   );
 }

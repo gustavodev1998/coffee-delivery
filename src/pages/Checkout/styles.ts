@@ -1,13 +1,14 @@
 import styled from "styled-components";
 
 export const CheckoutContainer = styled.div`
-  padding: 0 2rem;
-`;
-
-export const CheckoutMain = styled.main`
   max-width: 1120px;
   margin: auto;
+  display: flex;
+  gap: 2rem;
+  padding-bottom: 3.5rem;
 `;
+
+export const CheckoutMain = styled.main``;
 
 /* ADDRESS */
 export const CheckoutAddress = styled.div`
@@ -153,6 +154,7 @@ export const CheckoutOrderPaymentMethod = styled.button`
   border: none;
 
   transition: all ease 0.2s;
+  border: 1px solid transparent;
 
   svg {
     color: ${(props) => props.theme.purple};
@@ -163,5 +165,78 @@ export const CheckoutOrderPaymentMethod = styled.button`
   ::selection {
     background-color: ${(props) => props.theme.purpleLight};
     border: 1px solid ${(props) => props.theme.purple};
+  }
+`;
+
+export const CheckoutCartSelected = styled.div``;
+
+export const CheckoutCartSelectedResume = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 1.25rem;
+  background-color: ${(props) => props.theme.card};
+  padding: 2.5rem;
+  border-radius: 0.375rem 2.75rem;
+
+  .confirmOrder {
+    width: 100%;
+  }
+`;
+
+/* 2ND PART */
+
+export const CoffeeCards = styled.div`
+  @media only screen and (max-width: 1200px) {
+  }
+
+  @media only screen and (max-width: 615px) {
+  }
+`;
+
+export const CheckoutInfo = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  width: 100%;
+
+  gap: 0.5rem;
+  font-size: 0.875rem;
+  font-family: "Roboto";
+`;
+
+export const CheckoutTotal = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  width: 100%;
+
+  font-family: "Roboto";
+  font-weight: 700;
+  font-size: 1.25rem;
+`;
+
+export const CheckoutConfirmOrder = styled.button`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.25rem;
+  background-color: ${(props) => props.theme.yellow};
+  padding: 0.75rem 0.5rem;
+  width: 100%;
+  border: none;
+  border-radius: 0.375rem;
+  opacity: 0.9;
+  transition: all ease 0.2s;
+
+  font-family: "Roboto";
+  font-weight: 700;
+  font-size: 0.875rem;
+  text-transform: uppercase;
+
+  :hover {
+    opacity: 1;
   }
 `;

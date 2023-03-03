@@ -29,6 +29,7 @@ export const GlobalStyle = createGlobalStyle`
 
     img, svg, a {
         cursor: pointer;
+        text-decoration: none;
     }
 
     body, input-security, textarea, button {
