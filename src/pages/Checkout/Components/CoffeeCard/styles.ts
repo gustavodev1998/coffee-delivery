@@ -22,6 +22,15 @@ export const CoffeeCardContainer = styled.div`
     bottom: -1.5rem;
     left: 50%;
   }
+
+  @media only screen and (max-width: 1200px) {
+    justify-content: flex-start;
+  }
+
+  @media only screen and (max-width: 565px) {
+    flex-direction: column;
+    gap: 1.75rem;
+  }
 `;
 
 export const CoffeeCardImageContainer = styled.div`

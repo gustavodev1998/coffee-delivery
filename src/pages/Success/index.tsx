@@ -59,7 +59,9 @@ export function Success() {
               </SuccessInfoDetail>
             </SuccessInfoItem>
           </SuccessInfoContainer>
-          <SuccessOrderIllustration src={confirmedOrder} alt="" />
+          <SuccessOrderIllustration>
+            <img src={confirmedOrder} alt="" />
+          </SuccessOrderIllustration>
         </SuccessInfo>
       </SuccessInfoOrder>
     </SuccessContainer>

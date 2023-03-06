@@ -6,6 +6,11 @@ export const CheckoutContainer = styled.div`
   display: flex;
   gap: 2rem;
   padding-bottom: 3.5rem;
+
+  @media only screen and (max-width: 1200px) {
+    flex-direction: column;
+    padding: 0 2rem;
+  }
 `;
 
 export const CheckoutMain = styled.main``;
@@ -57,6 +62,12 @@ export const CheckoutAddressHeader = styled.div`
     line-height: 130%;
     margin-left: 1.875rem;
   }
+
+  @media only screen and (max-width: 650px) {
+    span {
+      margin-left: 0rem;
+    }
+  }
 `;
 
 export const CheckoutAddressForm = styled.div`
@@ -96,6 +107,17 @@ export const CheckoutAddressForm = styled.div`
     display: grid;
     grid-template-columns: 12.5rem 1fr 3.75rem;
   }
+
+  @media only screen and (max-width: 650px) {
+    div:nth-child(1n),
+    div:nth-child(2n) {
+      grid-template-columns: 1fr;
+    }
+
+    input:first-child {
+      width: 100%;
+    }
+  }
 `;
 
 /* ORDER */
@@ -132,6 +154,12 @@ export const CheckoutOrderHeader = styled.div`
     line-height: 130%;
     margin-left: 1.875rem;
   }
+
+  @media only screen and (max-width: 650px) {
+    span {
+      margin-left: 0rem;
+    }
+  }
 `;
 
 export const CheckoutOrderPayment = styled.div`
@@ -139,6 +167,11 @@ export const CheckoutOrderPayment = styled.div`
   align-items: center;
   gap: 0.75rem;
   margin-top: 2rem;
+
+  @media only screen and (max-width: 650px) {
+    flex-direction: column;
+    align-items: flex-start;
+  }
 `;
 
 export const CheckoutOrderPaymentMethod = styled.button`
@@ -166,6 +199,11 @@ export const CheckoutOrderPaymentMethod = styled.button`
     background-color: ${(props) => props.theme.purpleLight};
     border: 1px solid ${(props) => props.theme.purple};
   }
+
+  @media only screen and (max-width: 650px) {
+    width: 100%;
+    justify-content: flex-start;
+  }
 `;
 
 export const CheckoutCartSelected = styled.div``;
@@ -188,9 +226,9 @@ export const CheckoutCartSelectedResume = styled.div`
 
 export const CoffeeCards = styled.div`
   @media only screen and (max-width: 1200px) {
-  }
-
-  @media only screen and (max-width: 615px) {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
   }
 `;
 

@@ -17,10 +17,22 @@ export const SuccessInfo = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
+
+  @media only screen and (max-width: 1025px) {
+    flex-direction: column;
+    align-items: flex-start;
+  }
 `;
 export const SuccessInfoOrder = styled.div``;
 
-export const SuccessOrderIllustration = styled.img``;
+export const SuccessOrderIllustration = styled.div`
+  img {
+    width: 100%;
+  }
+  @media only screen and (max-width: 1025px) {
+    margin-top: 2.5rem;
+  }
+`;
 
 export const SuccessInfoTitle = styled.div`
   font-family: "Baloo 2";
@@ -46,6 +58,10 @@ export const SuccessInfoContainer = styled.div`
   border-radius: 0.375rem 2.25rem;
 
   border: 1px solid #8047f8;
+
+  @media only screen and (max-width: 500px) {
+    width: 100%;
+  }
 `;
 
 export const SuccessInfoItem = styled.div`
@@ -69,4 +85,11 @@ export const SuccessInfoDetail = styled.div`
   font-size: 1rem;
   font-weight: 400;
   font-family: "Roboto";
+
+  @media only screen and (max-width: 500px) {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    font-size: 0.75rem;
+  }
 `;

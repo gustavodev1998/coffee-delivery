@@ -1,3 +1,7 @@
+import { coffees } from "../../data/coffees";
+
+import { NavLink } from "react-router-dom";
+
 import {
   Bank,
   CreditCard,
@@ -26,10 +30,6 @@ import {
   CheckoutTotal,
   CoffeeCards,
 } from "./styles";
-
-import expresso from "../../assets/coffeetypes/expresso.svg";
-import americano from "../../assets/coffeetypes/americano.svg";
-import { NavLink } from "react-router-dom";
 
 export function Checkout() {
   return (
@@ -124,14 +124,14 @@ export function Checkout() {
           <CoffeeCards>
             <CoffeeCard
               id={0}
-              src={expresso}
+              src={coffees[1].src}
               alt={"expresso"}
               title={"Expresso Tradicional"}
               price={"9,99"}
             />
             <CoffeeCard
               id={1}
-              src={americano}
+              src={coffees[2].src}
               alt={"americano"}
               title={"Expresso Americano"}
               price={"9,99"}
