@@ -13,8 +13,28 @@ import {
 } from "./styles";
 
 import confirmedOrder from "../../assets/confirmedOrder.svg";
+import { useLocation, useNavigate } from "react-router";
+import { OrderData } from "../Checkout/Components/AddressForm";
+import { paymentMethods } from "../Checkout";
+import { useEffect } from "react";
+
+interface LocationType {
+  state: OrderData;
+}
 
 export function Success() {
+  const { state } = useLocation() as unknown as LocationType;
+
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (!state) {
+      navigate("/");
+    }
+  }, []);
+
+  if (!state) return <></>;
+
   return (
     <SuccessContainer>
       <SuccessInfoOrder>
@@ -30,8 +50,13 @@ export function Success() {
                 <MapPin size={16} weight="fill" color="white" />
               </ItemSvgContainer>
               <SuccessInfoDetail>
-                Entrega em <strong> Rua João Daniel Martinelli, 102</strong>
-                <p>Farrapos - Porto Alegre, RS</p>
+                Entrega em
+                <strong>
+                  {state.street}, {state.number}
+                </strong>
+                <p>
+                  {state.district} - {state.city}, {state.uf}
+                </p>
               </SuccessInfoDetail>
             </SuccessInfoItem>
 
@@ -54,7 +79,7 @@ export function Success() {
               <SuccessInfoDetail>
                 Pagamento na entrega
                 <p>
-                  <strong>Cartão de Crédito</strong>
+                  <strong>{paymentMethods[state.paymentMethod].label}</strong>
                 </p>
               </SuccessInfoDetail>
             </SuccessInfoItem>

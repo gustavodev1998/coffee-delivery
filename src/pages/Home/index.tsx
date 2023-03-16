@@ -70,18 +70,7 @@ export function Home() {
 
         <CoffeeCards>
           {coffees.map((coffee) => {
-            return (
-              <CoffeeCard
-                key={coffee.id}
-                id={coffee.id}
-                src={coffee.src}
-                alt={coffee.alt}
-                tags={coffee.tags !== undefined ? coffee.tags : [""]}
-                title={coffee.title}
-                subtitle={coffee.subtitle !== undefined ? coffee.subtitle : ""}
-                price={coffee.price}
-              />
-            );
+            return <CoffeeCard key={coffee.id} coffee={coffee} />;
           })}
         </CoffeeCards>
       </HomeCoffees>

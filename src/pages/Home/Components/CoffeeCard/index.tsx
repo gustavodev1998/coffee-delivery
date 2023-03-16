@@ -13,10 +13,7 @@ import {
 
 import { Minus, Plus, ShoppingCart } from "phosphor-react";
 import { useState } from "react";
-import {
-  CoffeeCartState,
-  CreateCoffeeCardItem,
-} from "../../../../reducers/reducer";
+import { useCart } from "../../../../hooks/useCart";
 
 export interface CoffeeCardProps {
   id: string;
@@ -28,81 +25,51 @@ export interface CoffeeCardProps {
   price: string;
 }
 
-export function CoffeeCard(props: CoffeeCardProps) {
-  const [coffeeCart, setCoffeCart] = useState<CoffeeCartState>();
+interface CoffeeProps {
+  coffee: CoffeeCardProps;
+}
 
-  const [coffee, setCoffee] = useState<CreateCoffeeCardItem>({
-    id: props.id,
+export function CoffeeCard({ coffee }: CoffeeProps) {
+  const { addCoffeeToCart } = useCart();
+  const [quantity, setQuantity] = useState(1);
 
-    coffee: {
-      id: props.id,
-      src: props.src,
-      alt: props.alt,
-      title: props.title,
-      price: props.price,
-    },
+  function handleAddToCart() {
+    const coffeeToAdd = {
+      ...coffee,
+      quantity: quantity,
+    };
 
-    totalAmount: 1,
-    totalCoffePrice: parseFloat(props.price),
-  });
-
-  const [coffeeAmount, setCoffeeAmount] = useState(1);
+    addCoffeeToCart(coffeeToAdd);
+  }
 
   function handleCoffeeAmount(operationType: string) {
     if (operationType === "minus") {
-      if (coffeeAmount <= 1) {
-        setCoffeeAmount(1);
-      } else setCoffeeAmount(coffeeAmount - 1);
+      if (quantity <= 1) {
+        setQuantity(1);
+      } else setQuantity(quantity - 1);
     } else {
-      setCoffeeAmount(coffeeAmount + 1);
+      setQuantity(quantity + 1);
     }
-  }
-
-  function addCoffeeToCart(coffeeProps: CoffeeCardProps) {
-    const totalPrice = coffeeAmount * parseFloat(coffeeProps.price);
-
-    setCoffee({
-      id: coffeeProps.id,
-      coffee: {
-        id: props.id,
-        src: props.src,
-        alt: props.alt,
-        title: props.title,
-        price: props.price,
-      },
-      totalAmount: coffeeAmount,
-      totalCoffePrice: totalPrice,
-    });
-
-    const newCoffeeList = coffeeCart?.coffeesCards.map((cof) => {
-      if (cof.id === coffeeProps.id) {
-        return coffee;
-      }
-
-      return cof;
-    });
-
-    /* SET N FUNCIONA */
   }
 
   return (
     <CoffeeCardContainer>
       <CoffeeCardImageContainer>
-        <img src={props.src} alt={props.alt} />
+        <img src={coffee.src} alt={coffee.alt} />
       </CoffeeCardImageContainer>
 
       <CoffeeTags>
-        {props.tags!.map((tag, index) => {
+        {coffee.tags!.map((tag, index) => {
           return <CoffeeTag key={index}>{tag}</CoffeeTag>;
         })}
       </CoffeeTags>
 
-      <CoffeeCardTitle>{props.title}</CoffeeCardTitle>
-      <CoffeeCardSubTitle>{props.subtitle}</CoffeeCardSubTitle>
+      <CoffeeCardTitle>{coffee.title}</CoffeeCardTitle>
+      <CoffeeCardSubTitle>{coffee.subtitle}</CoffeeCardSubTitle>
 
       <CoffeeCardInfo>
         <CoffeeCardValue>
-          R$ <span>{props.price}</span>
+          R$ <span>{coffee.price}</span>
         </CoffeeCardValue>
         <CoffeeCardAmount>
           <Minus
@@ -110,7 +77,7 @@ export function CoffeeCard(props: CoffeeCardProps) {
             weight="fill"
             onClick={() => handleCoffeeAmount("minus")}
           />
-          <span> {coffeeAmount} </span>
+          <span> {quantity} </span>
           <Plus
             size={14}
             weight="fill"
@@ -122,7 +89,7 @@ export function CoffeeCard(props: CoffeeCardProps) {
             size={22}
             weight="fill"
             color="white"
-            onClick={() => addCoffeeToCart(props)}
+            onClick={handleAddToCart}
           />
         </CoffeeCardCart>
       </CoffeeCardInfo>

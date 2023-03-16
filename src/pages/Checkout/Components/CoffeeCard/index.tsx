@@ -11,35 +11,48 @@ import {
 } from "./styles";
 
 import { Minus, Plus, Trash } from "phosphor-react";
+import { CartItem } from "../../../../contexts/CartContext";
+import { useCart } from "../../../../hooks/useCart";
+import { formatMoney } from "../../../../utils/formatMoney";
 
-interface CoffeeCardProps {
-  id: number;
-  src: string;
-  alt: string;
-  tags?: string[];
-  title: string;
-  subtitle?: string;
-  price: string;
+interface CoffeeProps {
+  coffee: CartItem;
 }
 
-export function CoffeeCard(props: CoffeeCardProps) {
+export function CoffeeCard({ coffee }: CoffeeProps) {
+  const { changeCartItemQuantity, removeCartItem } = useCart();
+  const coffeeTotal = parseFloat(coffee.price) * coffee.quantity;
+  const formattedPrice = formatMoney(coffeeTotal);
+
+  function handleIncrease() {
+    changeCartItemQuantity(parseInt(coffee.id), "increase");
+  }
+
+  function handleDecrease() {
+    changeCartItemQuantity(parseInt(coffee.id), "decrease");
+  }
+
+  function handleRemove() {
+    removeCartItem(parseInt(coffee.id));
+  }
+
   return (
     <CoffeeCardContainer>
       <CoffeeCardImageContainer>
-        <img src={props.src} alt={props.alt} />
+        <img src={coffee.src} alt={coffee.alt} />
       </CoffeeCardImageContainer>
 
       <CoffeeCardOptions>
-        <CoffeeCardTitle>{props.title}</CoffeeCardTitle>
+        <CoffeeCardTitle>{coffee.title}</CoffeeCardTitle>
 
         <CoffeeCardOperations>
           <CoffeeCardAmount>
-            <Minus size={14} weight="fill" />
-            <span> 1 </span>
-            <Plus size={14} weight="fill" />
+            <Minus size={14} weight="fill" onClick={handleDecrease} />
+            <span> {coffee.quantity} </span>
+            <Plus size={14} weight="fill" onClick={handleIncrease} />
           </CoffeeCardAmount>
 
-          <CheckoutRemoveFromCart>
+          <CheckoutRemoveFromCart onClick={handleRemove}>
             <Trash size={16} />
             <span>Remover</span>
           </CheckoutRemoveFromCart>
@@ -48,7 +61,7 @@ export function CoffeeCard(props: CoffeeCardProps) {
 
       <CoffeeCardInfo>
         <CoffeeCardValue>
-          R$ <span>{props.price}</span>
+          R$ <span>{formattedPrice}</span>
         </CoffeeCardValue>
       </CoffeeCardInfo>
     </CoffeeCardContainer>

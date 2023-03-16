@@ -70,56 +70,6 @@ export const CheckoutAddressHeader = styled.div`
   }
 `;
 
-export const CheckoutAddressForm = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: 0.25rem;
-  margin-top: 2rem;
-
-  input {
-    background-color: ${(props) => props.theme.input};
-    border: 1px solid ${(props) => props.theme.button};
-    border-radius: 0.25rem;
-    padding: 0.75rem;
-
-    margin-bottom: 1rem;
-  }
-
-  input::placeholder {
-    color: ${(props) => props.theme.label};
-    opacity: 1; /* Firefox */
-  }
-
-  .formRow {
-    gap: 0.75rem;
-  }
-
-  input:first-child {
-    width: 12.5rem;
-  }
-
-  div:nth-child(1n) {
-    display: grid;
-    grid-template-columns: 12.5rem 1fr;
-  }
-
-  div:nth-child(2n) {
-    display: grid;
-    grid-template-columns: 12.5rem 1fr 3.75rem;
-  }
-
-  @media only screen and (max-width: 650px) {
-    div:nth-child(1n),
-    div:nth-child(2n) {
-      grid-template-columns: 1fr;
-    }
-
-    input:first-child {
-      width: 100%;
-    }
-  }
-`;
-
 /* ORDER */
 export const CheckoutOrder = styled.div`
   background-color: ${(props) => props.theme.card};
@@ -195,9 +145,21 @@ export const CheckoutOrderPaymentMethod = styled.button`
   }
 
   :hover,
-  ::selection {
+  ::selection,
+  &:focus-within {
     background-color: ${(props) => props.theme.purpleLight};
     border: 1px solid ${(props) => props.theme.purple};
+  }
+
+  input {
+    visibility: hidden;
+    appearance: none;
+  }
+
+  label {
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
 
   @media only screen and (max-width: 650px) {

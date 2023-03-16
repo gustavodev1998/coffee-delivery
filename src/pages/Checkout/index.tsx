@@ -1,6 +1,4 @@
-import { coffees } from "../../data/coffees";
-
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 
 import {
   Bank,
@@ -13,7 +11,6 @@ import {
 import { CoffeeCard } from "./Components/CoffeeCard";
 import {
   CheckoutAddress,
-  CheckoutAddressForm,
   CheckoutAddressFormContainer,
   CheckoutAddressHeader,
   CheckoutCartSelected,
@@ -30,8 +27,45 @@ import {
   CheckoutTotal,
   CoffeeCards,
 } from "./styles";
+import { useCart } from "../../hooks/useCart";
+import { formatMoney } from "../../utils/formatMoney";
+import { AddressForm } from "./Components/AddressForm";
+
+const DELIVERY_PRICE = 3.5;
+
+export const paymentMethods = {
+  credit: {
+    label: "Cartão de Crédito",
+    icon: <CreditCard size={22} />,
+  },
+
+  debit: {
+    label: "Cartão de Débito",
+    icon: <Bank size={22} />,
+  },
+
+  money: {
+    label: "Dinheiro",
+    icon: <Money size={22} />,
+  },
+};
 
 export function Checkout() {
+  const { cartItems, cartQuantity, cartItemsTotal, cleanCart } = useCart();
+
+  const deliveryPrice = formatMoney(DELIVERY_PRICE);
+  const totalCheck = formatMoney(cartItemsTotal + DELIVERY_PRICE);
+
+  /*  const navigate = useNavigate();
+
+  function handleConfirmOrder(data: ConfirmOrderFormData) {
+    navigate("/orderConfirmed", {
+      state: data,
+    });
+
+    cleanCart();
+  } */
+
   return (
     <CheckoutContainer>
       <CheckoutMain>
@@ -48,41 +82,7 @@ export function Checkout() {
               <span>Informe o endereço onde deseja receber seu pedido</span>
             </CheckoutAddressHeader>
 
-            <CheckoutAddressForm>
-              <input type="text" name="CEP" id="CEP" placeholder="CEP" />
-              <input type="text" name="Rua" id="Rua" placeholder="Rua" />
-
-              <div className="formRow">
-                <input
-                  type="number"
-                  name="Numero"
-                  id="Numero"
-                  placeholder="Número"
-                />
-                <input
-                  type="text"
-                  name="Complemento"
-                  id="Complemento"
-                  placeholder="Complemento"
-                />
-              </div>
-
-              <div className="formRow">
-                <input
-                  type="text"
-                  name="Bairro"
-                  id="Bairro"
-                  placeholder="Bairro"
-                />
-                <input
-                  type="text"
-                  name="Cidade"
-                  id="Cidade"
-                  placeholder="Cidade"
-                />
-                <input type="text" name="UF" id="UF" placeholder="UF" />
-              </div>
-            </CheckoutAddressForm>
+            <AddressForm />
           </CheckoutAddressFormContainer>
         </CheckoutAddress>
 
@@ -99,20 +99,17 @@ export function Checkout() {
           </CheckoutOrderHeader>
 
           <CheckoutOrderPayment>
-            <CheckoutOrderPaymentMethod>
-              <CreditCard size={22} />
-              <span>Cartão de crédito</span>
-            </CheckoutOrderPaymentMethod>
-
-            <CheckoutOrderPaymentMethod>
-              <Bank size={22} />
-              <span>cartão de débito</span>
-            </CheckoutOrderPaymentMethod>
-
-            <CheckoutOrderPaymentMethod>
-              <Money size={22} />
-              <span>dinheiro</span>
-            </CheckoutOrderPaymentMethod>
+            {Object.entries(paymentMethods).map(([key, item]) => {
+              return (
+                <CheckoutOrderPaymentMethod key={item.label} value={key}>
+                  <input type="radio" id={item.label} name="paymentMethod" />
+                  <label htmlFor={item.label}>
+                    {item.icon}
+                    <span> {item.label}</span>
+                  </label>
+                </CheckoutOrderPaymentMethod>
+              );
+            })}
           </CheckoutOrderPayment>
         </CheckoutOrder>
       </CheckoutMain>
@@ -122,39 +119,34 @@ export function Checkout() {
 
         <CheckoutCartSelectedResume>
           <CoffeeCards>
-            <CoffeeCard
-              id={0}
-              src={coffees[1].src}
-              alt={"expresso"}
-              title={"Expresso Tradicional"}
-              price={"9,99"}
-            />
-            <CoffeeCard
-              id={1}
-              src={coffees[2].src}
-              alt={"americano"}
-              title={"Expresso Americano"}
-              price={"9,99"}
-            />
+            {cartItems.map((coffee) => {
+              return <CoffeeCard key={coffee.id} coffee={coffee} />;
+            })}
           </CoffeeCards>
 
           <CheckoutInfo>
             <div>Total de itens</div>
-            <span>R$ 29,70</span>
+            <span>R$ {formatMoney(cartItemsTotal)}</span>
           </CheckoutInfo>
 
           <CheckoutInfo>
             <div>Entrega</div>
-            <span>R$ 3,50</span>
+            <span>R$ {deliveryPrice}</span>
           </CheckoutInfo>
 
           <CheckoutTotal>
             <div>Total</div>
-            <span>R$ 33,20</span>
+            <span>R$ {totalCheck}</span>
           </CheckoutTotal>
 
           <NavLink to="/success" title="Confirme" className="confirmOrder">
-            <CheckoutConfirmOrder>Confirmar Pedido</CheckoutConfirmOrder>
+            <CheckoutConfirmOrder
+              disabled={cartQuantity <= 0}
+              type="submit"
+              /* onClick={handleConfirmOrder} */
+            >
+              Confirmar Pedido
+            </CheckoutConfirmOrder>
           </NavLink>
         </CheckoutCartSelectedResume>
       </CheckoutCartSelected>
