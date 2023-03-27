@@ -1,8 +1,8 @@
 # :coffee: coffee-delivery
 
 <br><div align="center">
-<img alt="" title="" src="https://github.com/gustavodev1998/02-ignite-timer/blob/main/public/ignite_timer_homePage.png?raw=true" width="1200px" />
-<img alt="" title="" src="https://github.com/gustavodev1998/02-ignite-timer/blob/main/public/ignite_timer_historyPage.png?raw=true" width="1200px" />
+<img alt="" title="" src="https://github.com/gustavodev1998/coffee-delivery/blob/main/public/HomePage.png?raw=true" width="1200px" />
+<img alt="" title="" src="https://github.com/gustavodev1998/coffee-delivery/blob/main/public/CartPage.png?raw=true" width="1200px" />
 </div>
 
 ## 🛠️ Technologies/Tools
