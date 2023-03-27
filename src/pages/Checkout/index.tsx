@@ -1,4 +1,4 @@
-import { NavLink, useNavigate } from "react-router-dom";
+import * as Styled from "./styles";
 
 import {
   Bank,
@@ -9,27 +9,12 @@ import {
 } from "phosphor-react";
 
 import { CoffeeCard } from "./Components/CoffeeCard";
-import {
-  CheckoutAddress,
-  CheckoutAddressFormContainer,
-  CheckoutAddressHeader,
-  CheckoutCartSelected,
-  CheckoutCartSelectedResume,
-  CheckoutConfirmOrder,
-  CheckoutContainer,
-  CheckoutInfo,
-  CheckoutMain,
-  CheckoutOrder,
-  CheckoutOrderHeader,
-  CheckoutOrderPayment,
-  CheckoutOrderPaymentMethod,
-  CheckoutTitle,
-  CheckoutTotal,
-  CoffeeCards,
-} from "./styles";
+import { AddressForm, ConfirmOrderFormData } from "./Components/AddressForm";
+
 import { useCart } from "../../hooks/useCart";
 import { formatMoney } from "../../utils/formatMoney";
-import { AddressForm } from "./Components/AddressForm";
+
+import { useNavigate } from "react-router-dom";
 
 const DELIVERY_PRICE = 3.5;
 
@@ -51,43 +36,57 @@ export const paymentMethods = {
 };
 
 export function Checkout() {
-  const { cartItems, cartQuantity, cartItemsTotal, cleanCart } = useCart();
+  const {
+    cartItems,
+    cartQuantity,
+    cartItemsTotal,
+    cleanCart,
+    addressForm,
+    insertAddressInfo,
+  } = useCart();
 
   const deliveryPrice = formatMoney(DELIVERY_PRICE);
   const totalCheck = formatMoney(cartItemsTotal + DELIVERY_PRICE);
 
-  /*  const navigate = useNavigate();
+  const navigate = useNavigate();
 
   function handleConfirmOrder(data: ConfirmOrderFormData) {
-    navigate("/orderConfirmed", {
-      state: data,
+    const updatedAddress = {
+      ...addressForm,
+      paymentMethod: data.paymentMethod,
+    };
+
+    insertAddressInfo(updatedAddress);
+
+    navigate("/success", {
+      state: addressForm,
     });
 
     cleanCart();
-  } */
+  }
 
   return (
-    <CheckoutContainer>
-      <CheckoutMain>
-        <CheckoutAddress>
-          <CheckoutTitle>Complete seu pedido</CheckoutTitle>
+    <Styled.CheckoutContainer>
+      <Styled.CheckoutMain>
+        <Styled.CheckoutAddress>
+          <Styled.CheckoutTitle>Complete seu pedido</Styled.CheckoutTitle>
 
-          <CheckoutAddressFormContainer>
-            <CheckoutAddressHeader>
+          <Styled.CheckoutAddressFormContainer>
+            <Styled.CheckoutAddressHeader>
               <div>
                 <MapPinLine size={22} weight="fill" />
                 <p>Endereço de Entrega</p>
               </div>
 
               <span>Informe o endereço onde deseja receber seu pedido</span>
-            </CheckoutAddressHeader>
+            </Styled.CheckoutAddressHeader>
 
             <AddressForm />
-          </CheckoutAddressFormContainer>
-        </CheckoutAddress>
+          </Styled.CheckoutAddressFormContainer>
+        </Styled.CheckoutAddress>
 
-        <CheckoutOrder>
-          <CheckoutOrderHeader>
+        <Styled.CheckoutOrder>
+          <Styled.CheckoutOrderHeader>
             <div>
               <CurrencyDollar size={22} weight="fill" />
               <p>Pagamento</p>
@@ -96,60 +95,59 @@ export function Checkout() {
             <span>
               O pagamento é feito na entrega. Escolha a forma que deseja pagar
             </span>
-          </CheckoutOrderHeader>
+          </Styled.CheckoutOrderHeader>
 
-          <CheckoutOrderPayment>
+          <Styled.CheckoutOrderPayment>
             {Object.entries(paymentMethods).map(([key, item]) => {
               return (
-                <CheckoutOrderPaymentMethod key={item.label} value={key}>
+                <Styled.CheckoutOrderPaymentMethod key={item.label} value={key}>
                   <input type="radio" id={item.label} name="paymentMethod" />
                   <label htmlFor={item.label}>
                     {item.icon}
                     <span> {item.label}</span>
                   </label>
-                </CheckoutOrderPaymentMethod>
+                </Styled.CheckoutOrderPaymentMethod>
               );
             })}
-          </CheckoutOrderPayment>
-        </CheckoutOrder>
-      </CheckoutMain>
+          </Styled.CheckoutOrderPayment>
+        </Styled.CheckoutOrder>
+      </Styled.CheckoutMain>
 
-      <CheckoutCartSelected>
-        <CheckoutTitle>Cafés selecionados</CheckoutTitle>
+      <Styled.CheckoutCartSelected>
+        <Styled.CheckoutTitle>Cafés selecionados</Styled.CheckoutTitle>
 
-        <CheckoutCartSelectedResume>
-          <CoffeeCards>
+        <Styled.CheckoutCartSelectedResume>
+          <Styled.CoffeeCards>
             {cartItems.map((coffee) => {
               return <CoffeeCard key={coffee.id} coffee={coffee} />;
             })}
-          </CoffeeCards>
+          </Styled.CoffeeCards>
 
-          <CheckoutInfo>
+          <Styled.CheckoutInfo>
             <div>Total de itens</div>
             <span>R$ {formatMoney(cartItemsTotal)}</span>
-          </CheckoutInfo>
+          </Styled.CheckoutInfo>
 
-          <CheckoutInfo>
+          <Styled.CheckoutInfo>
             <div>Entrega</div>
             <span>R$ {deliveryPrice}</span>
-          </CheckoutInfo>
+          </Styled.CheckoutInfo>
 
-          <CheckoutTotal>
+          <Styled.CheckoutTotal>
             <div>Total</div>
             <span>R$ {totalCheck}</span>
-          </CheckoutTotal>
+          </Styled.CheckoutTotal>
 
-          <NavLink to="/success" title="Confirme" className="confirmOrder">
-            <CheckoutConfirmOrder
-              disabled={cartQuantity <= 0}
-              type="submit"
-              /* onClick={handleConfirmOrder} */
-            >
-              Confirmar Pedido
-            </CheckoutConfirmOrder>
-          </NavLink>
-        </CheckoutCartSelectedResume>
-      </CheckoutCartSelected>
-    </CheckoutContainer>
+          <Styled.CheckoutConfirmOrder
+            disabled={cartQuantity <= 0}
+            type="submit"
+            onClick={() => handleConfirmOrder(addressForm)}
+            className="confirmOrder"
+          >
+            Confirmar Pedido
+          </Styled.CheckoutConfirmOrder>
+        </Styled.CheckoutCartSelectedResume>
+      </Styled.CheckoutCartSelected>
+    </Styled.CheckoutContainer>
   );
 }

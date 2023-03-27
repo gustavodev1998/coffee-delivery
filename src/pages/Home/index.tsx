@@ -1,79 +1,69 @@
-import { Coffee, Package, ShoppingCart, Timer } from "phosphor-react";
-import {
-  CoffeeCards,
-  HomeCoffees,
-  HomeContainer,
-  HomeInfo,
-  HomeItem,
-  HomeItems,
-  HomeItemSvgContainer,
-  HomeMain,
-  HomePublicity,
-  HomeTitle,
-} from "./styles";
+import * as Styled from "./styles";
 
+import { Coffee, Package, ShoppingCart, Timer } from "phosphor-react";
 import coffeePub from "../../assets/publicity.svg";
+
 import { CoffeeCard } from "./Components/CoffeeCard";
 import { coffees } from "../../data/coffees";
 
 export function Home() {
   return (
     <>
-      <HomeContainer>
-        <HomeMain>
-          <HomeInfo>
-            <HomeTitle>
+      <Styled.HomeContainer>
+        <Styled.HomeMain>
+          <Styled.HomeInfo>
+            <Styled.HomeTitle>
               <h2>Encontre o café perfeito para qualquer hora do dia</h2>
 
               <span>
                 Com o Coffee Delivery você recebe seu café onde estiver, a
                 qualquer hora
               </span>
-            </HomeTitle>
-            <HomeItems>
-              <HomeItem>
-                <HomeItemSvgContainer variant="#C47F17">
+            </Styled.HomeTitle>
+            <Styled.HomeItems>
+              <Styled.HomeItem>
+                <Styled.HomeItemSvgContainer variant="#C47F17">
                   <ShoppingCart size={16} weight="fill" color="white" />
-                </HomeItemSvgContainer>
+                </Styled.HomeItemSvgContainer>
 
                 <span>Compra simples e segura</span>
-              </HomeItem>
-              <HomeItem>
-                <HomeItemSvgContainer variant="#574F4D">
+              </Styled.HomeItem>
+              <Styled.HomeItem>
+                <Styled.HomeItemSvgContainer variant="#574F4D">
                   <Package size={16} weight="fill" color="white" />
-                </HomeItemSvgContainer>
+                </Styled.HomeItemSvgContainer>
 
                 <span>Embalagem mantém o café intacto</span>
-              </HomeItem>
-              <HomeItem>
-                <HomeItemSvgContainer variant="#DBAC2C">
+              </Styled.HomeItem>
+              <Styled.HomeItem>
+                <Styled.HomeItemSvgContainer variant="#DBAC2C">
                   <Timer size={16} weight="fill" color="white" />
-                </HomeItemSvgContainer>
+                </Styled.HomeItemSvgContainer>
 
                 <span>Entrega rápida e rastreada</span>
-              </HomeItem>
-              <HomeItem>
-                <HomeItemSvgContainer variant="#8047F8">
+              </Styled.HomeItem>
+              <Styled.HomeItem>
+                <Styled.HomeItemSvgContainer variant="#8047F8">
                   <Coffee size={16} weight="fill" color="white" />
-                </HomeItemSvgContainer>
+                </Styled.HomeItemSvgContainer>
 
                 <span>O café chega fresquinho até você</span>
-              </HomeItem>
-            </HomeItems>
-          </HomeInfo>
+              </Styled.HomeItem>
+            </Styled.HomeItems>
+          </Styled.HomeInfo>
 
-          <HomePublicity src={coffeePub} alt="" />
-        </HomeMain>
-      </HomeContainer>
-      <HomeCoffees>
+          <Styled.HomePublicity src={coffeePub} alt="" />
+        </Styled.HomeMain>
+      </Styled.HomeContainer>
+      <Styled.HomeCoffees>
         <h1>Nossos cafés</h1>
 
-        <CoffeeCards>
+        <Styled.CoffeeCards>
           {coffees.map((coffee) => {
             return <CoffeeCard key={coffee.id} coffee={coffee} />;
           })}
-        </CoffeeCards>
-      </HomeCoffees>
+        </Styled.CoffeeCards>
+      </Styled.HomeCoffees>
     </>
   );
 }

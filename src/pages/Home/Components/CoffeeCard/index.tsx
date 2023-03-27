@@ -1,17 +1,7 @@
-import {
-  CoffeeCardAmount,
-  CoffeeCardCart,
-  CoffeeCardContainer,
-  CoffeeCardImageContainer,
-  CoffeeCardInfo,
-  CoffeeCardSubTitle,
-  CoffeeCardTitle,
-  CoffeeCardValue,
-  CoffeeTag,
-  CoffeeTags,
-} from "./styles";
+import * as Styled from "./styles";
 
 import { Minus, Plus, ShoppingCart } from "phosphor-react";
+
 import { useState } from "react";
 import { useCart } from "../../../../hooks/useCart";
 
@@ -53,25 +43,25 @@ export function CoffeeCard({ coffee }: CoffeeProps) {
   }
 
   return (
-    <CoffeeCardContainer>
-      <CoffeeCardImageContainer>
+    <Styled.CoffeeCardContainer>
+      <Styled.CoffeeCardImageContainer>
         <img src={coffee.src} alt={coffee.alt} />
-      </CoffeeCardImageContainer>
+      </Styled.CoffeeCardImageContainer>
 
-      <CoffeeTags>
+      <Styled.CoffeeTags>
         {coffee.tags!.map((tag, index) => {
-          return <CoffeeTag key={index}>{tag}</CoffeeTag>;
+          return <Styled.CoffeeTag key={index}>{tag}</Styled.CoffeeTag>;
         })}
-      </CoffeeTags>
+      </Styled.CoffeeTags>
 
-      <CoffeeCardTitle>{coffee.title}</CoffeeCardTitle>
-      <CoffeeCardSubTitle>{coffee.subtitle}</CoffeeCardSubTitle>
+      <Styled.CoffeeCardTitle>{coffee.title}</Styled.CoffeeCardTitle>
+      <Styled.CoffeeCardSubTitle>{coffee.subtitle}</Styled.CoffeeCardSubTitle>
 
-      <CoffeeCardInfo>
-        <CoffeeCardValue>
+      <Styled.CoffeeCardInfo>
+        <Styled.CoffeeCardValue>
           R$ <span>{coffee.price}</span>
-        </CoffeeCardValue>
-        <CoffeeCardAmount>
+        </Styled.CoffeeCardValue>
+        <Styled.CoffeeCardAmount>
           <Minus
             size={14}
             weight="fill"
@@ -83,16 +73,16 @@ export function CoffeeCard({ coffee }: CoffeeProps) {
             weight="fill"
             onClick={() => handleCoffeeAmount("plus")}
           />
-        </CoffeeCardAmount>
-        <CoffeeCardCart>
+        </Styled.CoffeeCardAmount>
+        <Styled.CoffeeCardCart>
           <ShoppingCart
             size={22}
             weight="fill"
             color="white"
             onClick={handleAddToCart}
           />
-        </CoffeeCardCart>
-      </CoffeeCardInfo>
-    </CoffeeCardContainer>
+        </Styled.CoffeeCardCart>
+      </Styled.CoffeeCardInfo>
+    </Styled.CoffeeCardContainer>
   );
 }

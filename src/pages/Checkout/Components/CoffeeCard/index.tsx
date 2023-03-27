@@ -1,16 +1,7 @@
-import {
-  CheckoutRemoveFromCart,
-  CoffeeCardAmount,
-  CoffeeCardContainer,
-  CoffeeCardImageContainer,
-  CoffeeCardInfo,
-  CoffeeCardOperations,
-  CoffeeCardOptions,
-  CoffeeCardTitle,
-  CoffeeCardValue,
-} from "./styles";
+import * as Styled from "./styles";
 
 import { Minus, Plus, Trash } from "phosphor-react";
+
 import { CartItem } from "../../../../contexts/CartContext";
 import { useCart } from "../../../../hooks/useCart";
 import { formatMoney } from "../../../../utils/formatMoney";
@@ -21,7 +12,9 @@ interface CoffeeProps {
 
 export function CoffeeCard({ coffee }: CoffeeProps) {
   const { changeCartItemQuantity, removeCartItem } = useCart();
+
   const coffeeTotal = parseFloat(coffee.price) * coffee.quantity;
+
   const formattedPrice = formatMoney(coffeeTotal);
 
   function handleIncrease() {
@@ -37,33 +30,33 @@ export function CoffeeCard({ coffee }: CoffeeProps) {
   }
 
   return (
-    <CoffeeCardContainer>
-      <CoffeeCardImageContainer>
+    <Styled.CoffeeCardContainer>
+      <Styled.CoffeeCardImageContainer>
         <img src={coffee.src} alt={coffee.alt} />
-      </CoffeeCardImageContainer>
+      </Styled.CoffeeCardImageContainer>
 
-      <CoffeeCardOptions>
-        <CoffeeCardTitle>{coffee.title}</CoffeeCardTitle>
+      <Styled.CoffeeCardOptions>
+        <Styled.CoffeeCardTitle>{coffee.title}</Styled.CoffeeCardTitle>
 
-        <CoffeeCardOperations>
-          <CoffeeCardAmount>
+        <Styled.CoffeeCardOperations>
+          <Styled.CoffeeCardAmount>
             <Minus size={14} weight="fill" onClick={handleDecrease} />
             <span> {coffee.quantity} </span>
             <Plus size={14} weight="fill" onClick={handleIncrease} />
-          </CoffeeCardAmount>
+          </Styled.CoffeeCardAmount>
 
-          <CheckoutRemoveFromCart onClick={handleRemove}>
+          <Styled.CheckoutRemoveFromCart onClick={handleRemove}>
             <Trash size={16} />
             <span>Remover</span>
-          </CheckoutRemoveFromCart>
-        </CoffeeCardOperations>
-      </CoffeeCardOptions>
+          </Styled.CheckoutRemoveFromCart>
+        </Styled.CoffeeCardOperations>
+      </Styled.CoffeeCardOptions>
 
-      <CoffeeCardInfo>
-        <CoffeeCardValue>
+      <Styled.CoffeeCardInfo>
+        <Styled.CoffeeCardValue>
           R$ <span>{formattedPrice}</span>
-        </CoffeeCardValue>
-      </CoffeeCardInfo>
-    </CoffeeCardContainer>
+        </Styled.CoffeeCardValue>
+      </Styled.CoffeeCardInfo>
+    </Styled.CoffeeCardContainer>
   );
 }

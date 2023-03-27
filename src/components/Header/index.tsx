@@ -1,8 +1,10 @@
 import { HeaderCart, HeaderContainer } from "./styles";
-import coffeeLogo from "../../assets/coffeeLogo.svg";
-import { NavLink } from "react-router-dom";
 import { MapPin, ShoppingCart } from "phosphor-react";
+import coffeeLogo from "../../assets/coffeeLogo.svg";
+
 import { useCart } from "../../hooks/useCart";
+
+import { NavLink } from "react-router-dom";
 
 export function Header() {
   const { cartQuantity } = useCart();

@@ -1,10 +1,12 @@
-import { CheckoutAddressForm, InputWrapper } from "./styles";
+import { CheckoutAddressForm } from "./styles";
 
 import * as zod from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm, FormProvider, useFormContext } from "react-hook-form";
 
-enum PaymentMethods {
+import { useForm, FormProvider } from "react-hook-form";
+import { useCart } from "../../../../hooks/useCart";
+
+export enum PaymentMethods {
   credit = "credit",
   debit = "debit",
   money = "money",
@@ -14,7 +16,6 @@ const confirmOrderFormValidationSchema = zod.object({
   cep: zod.string().min(1, "Informe o CEP"),
   street: zod.string().min(1, "Informe a Rua"),
   number: zod.string().min(1, "Informe o Número"),
-  /* complement: zod.string(), */
   district: zod.string().min(1, "Informe o Bairro"),
   city: zod.string().min(1, "Informe a Cidade"),
   uf: zod.string().min(1, "Informe a UF"),
@@ -27,7 +28,7 @@ const confirmOrderFormValidationSchema = zod.object({
 
 export type OrderData = zod.infer<typeof confirmOrderFormValidationSchema>;
 
-type ConfirmOrderFormData = OrderData;
+export type ConfirmOrderFormData = OrderData;
 
 interface ErrorsType {
   errors: {
@@ -38,41 +39,57 @@ interface ErrorsType {
 }
 
 export function AddressForm() {
+  const { insertAddressInfo } = useCart();
+
   const confirmOrderForm = useForm<ConfirmOrderFormData>({
     resolver: zodResolver(confirmOrderFormValidationSchema),
   });
 
-  const { handleSubmit } = confirmOrderForm;
+  const {
+    control,
+    register,
+    handleSubmit,
+    formState: { isSubmitting },
+    reset,
+  } = useForm<ConfirmOrderFormData>({
+    resolver: zodResolver(confirmOrderFormValidationSchema),
+  });
 
-  function handleConfirmOrder(data: ConfirmOrderFormData) {}
+  async function handleConfirmOrder(data: ConfirmOrderFormData) {
+    insertAddressInfo(data);
 
-  /*   const { register, formState } = useFormContext();
-
-  const { errors } = formState as unknown as ErrorsType; */
+    reset();
+  }
 
   return (
     <FormProvider {...confirmOrderForm}>
       <CheckoutAddressForm onSubmit={handleSubmit(handleConfirmOrder)}>
-        {/* TROCAR CLASSNAME DPS */}
-
-        <input type="text" placeholder="CEP" />
-        <input type="text" name="Rua" id="Rua" placeholder="Rua" />
+        <input type="text" placeholder="CEP" required {...register("cep")} />
+        <input type="text" placeholder="Rua" required {...register("street")} />
 
         <div className="formRow">
-          <input type="number" name="Numero" id="Numero" placeholder="Número" />
-
           <input
-            type="text"
-            name="Complemento"
-            id="Complemento"
-            placeholder="Complemento"
+            type="number"
+            placeholder="Número"
+            required
+            {...register("number", { valueAsNumber: true })}
           />
         </div>
 
         <div className="formRow">
-          <input type="text" name="Bairro" id="Bairro" placeholder="Bairro" />
-          <input type="text" name="Cidade" id="Cidade" placeholder="Cidade" />
-          <input type="text" name="UF" id="UF" placeholder="UF" />
+          <input
+            type="text"
+            placeholder="Bairro"
+            required
+            {...register("district")}
+          />
+          <input
+            type="text"
+            placeholder="Cidade"
+            required
+            {...register("city")}
+          />
+          <input type="text" placeholder="UF" required {...register("uf")} />
         </div>
       </CheckoutAddressForm>
     </FormProvider>

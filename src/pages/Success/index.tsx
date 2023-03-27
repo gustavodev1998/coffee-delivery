@@ -1,22 +1,14 @@
-import { CurrencyDollar, MapPin, Timer } from "phosphor-react";
-import {
-  ItemSvgContainer,
-  SuccessContainer,
-  SuccessInfo,
-  SuccessInfoContainer,
-  SuccessInfoDetail,
-  SuccessInfoItem,
-  SuccessInfoOrder,
-  SuccessInfoSubTitle,
-  SuccessInfoTitle,
-  SuccessOrderIllustration,
-} from "./styles";
+import * as Styled from "./styles";
 
+import { CurrencyDollar, MapPin, Timer } from "phosphor-react";
 import confirmedOrder from "../../assets/confirmedOrder.svg";
-import { useLocation, useNavigate } from "react-router";
+
 import { OrderData } from "../Checkout/Components/AddressForm";
 import { paymentMethods } from "../Checkout";
+
 import { useEffect } from "react";
+import { useLocation, useNavigate } from "react-router";
+import { useCart } from "../../hooks/useCart";
 
 interface LocationType {
   state: OrderData;
@@ -27,29 +19,35 @@ export function Success() {
 
   const navigate = useNavigate();
 
+  const { addressForm } = useCart();
+
   useEffect(() => {
     if (!state) {
       navigate("/");
     }
+
+    console.log(addressForm);
   }, []);
 
   if (!state) return <></>;
 
   return (
-    <SuccessContainer>
-      <SuccessInfoOrder>
-        <SuccessInfoTitle>Uhu! Pedido confirmado</SuccessInfoTitle>
-        <SuccessInfoSubTitle>
+    <Styled.SuccessContainer>
+      <Styled.SuccessInfoOrder>
+        <Styled.SuccessInfoTitle>
+          Uhu! Pedido confirmado
+        </Styled.SuccessInfoTitle>
+        <Styled.SuccessInfoSubTitle>
           Agora é só aguardar que logo o café chegará até você
-        </SuccessInfoSubTitle>
+        </Styled.SuccessInfoSubTitle>
 
-        <SuccessInfo>
-          <SuccessInfoContainer>
-            <SuccessInfoItem>
-              <ItemSvgContainer variant="#8047F8">
+        <Styled.SuccessInfo>
+          <Styled.SuccessInfoContainer>
+            <Styled.SuccessInfoItem>
+              <Styled.ItemSvgContainer variant="#8047F8">
                 <MapPin size={16} weight="fill" color="white" />
-              </ItemSvgContainer>
-              <SuccessInfoDetail>
+              </Styled.ItemSvgContainer>
+              <Styled.SuccessInfoDetail>
                 Entrega em
                 <strong>
                   {state.street}, {state.number}
@@ -57,38 +55,38 @@ export function Success() {
                 <p>
                   {state.district} - {state.city}, {state.uf}
                 </p>
-              </SuccessInfoDetail>
-            </SuccessInfoItem>
+              </Styled.SuccessInfoDetail>
+            </Styled.SuccessInfoItem>
 
-            <SuccessInfoItem>
-              <ItemSvgContainer variant="#DBAC2C">
+            <Styled.SuccessInfoItem>
+              <Styled.ItemSvgContainer variant="#DBAC2C">
                 <Timer size={16} weight="fill" color="white" />
-              </ItemSvgContainer>
-              <SuccessInfoDetail>
+              </Styled.ItemSvgContainer>
+              <Styled.SuccessInfoDetail>
                 Previsão de entrega
                 <p>
                   <strong>20 min - 30 min</strong>
                 </p>
-              </SuccessInfoDetail>
-            </SuccessInfoItem>
+              </Styled.SuccessInfoDetail>
+            </Styled.SuccessInfoItem>
 
-            <SuccessInfoItem>
-              <ItemSvgContainer variant="#C47F17">
+            <Styled.SuccessInfoItem>
+              <Styled.ItemSvgContainer variant="#C47F17">
                 <CurrencyDollar size={16} weight="fill" color="white" />
-              </ItemSvgContainer>
-              <SuccessInfoDetail>
+              </Styled.ItemSvgContainer>
+              <Styled.SuccessInfoDetail>
                 Pagamento na entrega
                 <p>
                   <strong>{paymentMethods[state.paymentMethod].label}</strong>
                 </p>
-              </SuccessInfoDetail>
-            </SuccessInfoItem>
-          </SuccessInfoContainer>
-          <SuccessOrderIllustration>
+              </Styled.SuccessInfoDetail>
+            </Styled.SuccessInfoItem>
+          </Styled.SuccessInfoContainer>
+          <Styled.SuccessOrderIllustration>
             <img src={confirmedOrder} alt="" />
-          </SuccessOrderIllustration>
-        </SuccessInfo>
-      </SuccessInfoOrder>
-    </SuccessContainer>
+          </Styled.SuccessOrderIllustration>
+        </Styled.SuccessInfo>
+      </Styled.SuccessInfoOrder>
+    </Styled.SuccessContainer>
   );
 }

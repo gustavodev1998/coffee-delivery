@@ -1,6 +1,10 @@
 import { createContext, ReactNode, useEffect, useState } from "react";
 import { CoffeeCardProps } from "../pages/Home/Components/CoffeeCard";
 import { produce } from "immer";
+import {
+  ConfirmOrderFormData,
+  PaymentMethods,
+} from "../pages/Checkout/Components/AddressForm";
 
 export interface CartItem extends CoffeeCardProps {
   quantity: number;
@@ -17,6 +21,9 @@ interface CartContextType {
   ) => void;
   removeCartItem: (carItemId: number) => void;
   cleanCart: () => void;
+
+  addressForm: ConfirmOrderFormData;
+  insertAddressInfo: (data: ConfirmOrderFormData) => void;
 }
 
 export const CartContext = createContext({} as CartContextType);
@@ -34,6 +41,16 @@ export function CartContextProvider({ children }: CartContextProviderProps) {
       return JSON.parse(storagedCartItems);
     }
     return [];
+  });
+
+  const [addressForm, setAddressForm] = useState<ConfirmOrderFormData>({
+    cep: "",
+    street: "",
+    number: "",
+    district: "",
+    city: "",
+    uf: "",
+    paymentMethod: PaymentMethods.credit,
   });
 
   const cartQuantity = cartItems.length;
@@ -102,6 +119,23 @@ export function CartContextProvider({ children }: CartContextProviderProps) {
     setCartItems([]);
   }
 
+  async function insertAddressInfo(data: ConfirmOrderFormData) {
+    console.log("dentro do INSERT");
+
+    console.log(data);
+    const { cep, city, district, number, paymentMethod, street, uf } = data;
+
+    setAddressForm({
+      cep,
+      city,
+      district,
+      number,
+      paymentMethod,
+      street,
+      uf,
+    });
+  }
+
   useEffect(() => {
     localStorage.setItem(COFFEE_ITEMS_STORAGE_KEY, JSON.stringify(cartItems));
   }, [cartItems]);
@@ -117,7 +151,10 @@ export function CartContextProvider({ children }: CartContextProviderProps) {
         changeCartItemQuantity,
         removeCartItem,
         cleanCart,
-      }}>
+        addressForm,
+        insertAddressInfo,
+      }}
+    >
       {children}
     </CartContext.Provider>
   );
